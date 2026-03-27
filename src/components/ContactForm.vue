@@ -29,7 +29,7 @@
     </div>
     <div class="form-group">
       <button class="btn btn-primary btn-block" type="submit">Lưu</button>
-      <button v-if="contactLocal.id" type="button" class="mr-2 btn btn-danger" @click="deleteContact">
+      <button v-if="contactLocal._id" type="button" class="mr-2 btn btn-danger" @click="deleteContact">
         Xóa
       </button>
       <button type="button" class="btn btn-secondary" @click="cancel">Thoát</button>
@@ -53,7 +53,7 @@ export default {
     contact: {
       type: Object,
       required: true,
-      default: () => ({ name: '', email: '', phone: '', address: '', favorite: false, id: null })
+      default: () => ({ name: '', email: '', phone: '', address: '', favorite: false, _id: null })
     }
   },
   data() {
@@ -70,7 +70,7 @@ export default {
       address: yup.string()
         .max(100, "Địa chỉ tối đa 100 ký tự."),
       phone: yup.string()
-        .matches(/^((09|03|07|08|05)[0-9]{8})$/, "Số điện thoại không hợp lệ (09xxx xxx xxx)."),
+        .matches(/^((09|03|07|08|05)[0-9]{8})$/, "Số điện thoại không hợp lệ (09/03/07/08/05 + 8 số)."),
       favorite: yup.boolean(),
     });
     return {
@@ -84,7 +84,7 @@ export default {
       this.$emit("submit:contact", this.contactLocal);
     },
     deleteContact() {
-      this.$emit("delete:contact", this.contactLocal.id);
+      this.$emit("delete:contact", this.contactLocal._id);
     },
     cancel() {
       const reply = window.confirm('Bạn có thay đổi chưa lưu! Bạn có muốn rời khỏi?');
